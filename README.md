@@ -1,1 +1,44 @@
 # mw3-golfwithyourfriends2
+
+
+{
+  "mashup": {
+    "title": "Warfare Golf (working title)",
+    "tagline": "Golf With Your Friends, played on Modern Warfare III maps, with weapons to sabotage your rivals.",
+    "license": "free to play; remixing allowed; credit required",
+    "status": "design only - not built, not tested, not published"
+  },
+  "games": [
+    { "slug": "pc-golf-with-your-friends", "role": "primary", "needs": "player's own install; Melty installs into it and launches it", "loader": "unknown - inspect install (engine, mod folders, executable); no Melty loader supplied" },
+    { "slug": "pc-call-of-duty-modern-warfare-iii", "role": "companion", "needs": "player's own install; folder passed as {game:pc-call-of-duty-modern-warfare-iii}", "loader": "none - read-only access to its files; nothing copied or shipped" }
+  ],
+  "multiplayer": {
+    "maxPlayers": 4,
+    "connect": "TBD - host/join method of Golf With Your Friends must be found; test with two running copies before setting recipe.multiplayer.connect",
+    "notes": "Players behind routers need the game's own relay/lobby; no port forwarding."
+  },
+  "courses": {
+    "columns": ["id", "name", "source_game_map", "source_files_read_from", "holes", "tee_ref", "hole_ref", "status"],
+    "rows": [
+      { "id": "course_1", "name": "TBD (one MW3 map)", "source_game_map": "TBD", "source_files_read_from": "{game:pc-call-of-duty-modern-warfare-iii}", "holes": 3, "tee_ref": "TBD", "hole_ref": "TBD", "status": "unfilled" }
+    ]
+  },
+  "weapons": {
+    "columns": ["id", "display_name", "model_source", "sound_source", "cooldown_s", "ball_nudge_force", "range_m", "key", "status"],
+    "rows": [
+      { "id": "wpn_1", "display_name": "TBD (one MW3 weapon)", "model_source": "{game:pc-call-of-duty-modern-warfare-iii}", "sound_source": "{game:pc-call-of-duty-modern-warfare-iii}", "cooldown_s": 8, "ball_nudge_force": "TBD", "range_m": "TBD", "key": "TBD", "status": "unfilled" }
+    ]
+  },
+  "systems": {
+    "columns": ["id", "description", "depends_on", "status"],
+    "rows": [
+      { "id": "sys_content_reader", "description": "Read map and weapon data from the MW3 folder at runtime; never copy it", "depends_on": ["courses", "weapons"], "status": "unverified" },
+      { "id": "sys_weapon_use", "description": "Key press equips weapon, fires, applies nudge to a rival ball in line of sight", "depends_on": ["weapons"], "status": "unverified" },
+      { "id": "sys_net_sync", "description": "Weapon hits replicated so all 4 players see the same ball positions", "depends_on": ["multiplayer.connect"], "status": "unverified" }
+    ]
+  },
+  "open_obstacles": [
+    "MW3 map and weapon files are in proprietary formats; need to confirm they can be read at runtime from the player's copy.",
+    "Golf With Your Friends modding route and multiplayer join method not yet inspected."
+  ]
+}
